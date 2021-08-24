@@ -11,6 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		58E892F226D4B1B000029750 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58E892F126D4B1B000029750 /* BootSplash.storyboard */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		826329DAD51917AF947E1952 /* libPods-wdCourses.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67B8DE500592D8DD5F737211 /* libPods-wdCourses.a */; };
 		BE162C43DB489151B0549878 /* libPods-wdCourses-wdCoursesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1C2F5F139E73344338B78BB /* libPods-wdCourses-wdCoursesTests.a */; };
@@ -37,6 +38,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = wdCourses/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = wdCourses/main.m; sourceTree = "<group>"; };
 		417C87B734DA02A155BA34AC /* Pods-wdCourses-wdCoursesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wdCourses-wdCoursesTests.debug.xcconfig"; path = "Target Support Files/Pods-wdCourses-wdCoursesTests/Pods-wdCourses-wdCoursesTests.debug.xcconfig"; sourceTree = "<group>"; };
+		58E892F126D4B1B000029750 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = wdCourses/BootSplash.storyboard; sourceTree = "<group>"; };
 		67B8DE500592D8DD5F737211 /* libPods-wdCourses.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-wdCourses.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72C3CFEE2373B183962E7766 /* Pods-wdCourses-wdCoursesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wdCourses-wdCoursesTests.release.xcconfig"; path = "Target Support Files/Pods-wdCourses-wdCoursesTests/Pods-wdCourses-wdCoursesTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = wdCourses/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				58E892F126D4B1B000029750 /* BootSplash.storyboard */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -145,7 +148,6 @@
 				417C87B734DA02A155BA34AC /* Pods-wdCourses-wdCoursesTests.debug.xcconfig */,
 				72C3CFEE2373B183962E7766 /* Pods-wdCourses-wdCoursesTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -243,6 +245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58E892F226D4B1B000029750 /* BootSplash.storyboard in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
