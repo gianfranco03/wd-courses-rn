@@ -50,6 +50,7 @@ const Navigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
+        initialRouteName="Login"
         screenOptions={{
           headerShown: false,
         }}>
