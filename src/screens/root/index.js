@@ -1,13 +1,12 @@
 import React from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import {SafeAreaView} from 'react-native';
+
+import Navigator from '../../navigation';
 
 const RootScreen = () => {
   return (
-    <SafeAreaView
-      style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <View>
-        <Text>Hello from root screen</Text>
-      </View>
+    <SafeAreaView style={{flex: 1}}>
+      <Navigator />
     </SafeAreaView>
   );
 };
