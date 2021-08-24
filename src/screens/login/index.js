@@ -11,7 +11,7 @@ const LoginScreen = props => {
       <View>
         <Text>Hello from Login screen</Text>
         <TouchableOpacity
-          onPress={() => navigation.replace('Home')}
+          onPress={() => navigation.replace('Main')}
           style={styles.button}>
           <Text style={styles.buttonText}>Go to Home Screen</Text>
         </TouchableOpacity>
