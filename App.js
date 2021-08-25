@@ -1,11 +1,17 @@
 import React from 'react';
-import {Provider as PaperProvider, DefaultTheme} from 'react-native-paper';
+import {
+  Provider as PaperProvider,
+  DefaultTheme,
+  configureFonts,
+} from 'react-native-paper';
 
 import {UserContextProvider} from './src/context/userContext';
 import RootScreen from './src/screens/root';
+import {fontsConfig} from './src/lib/constants/typography';
 
 const theme = {
   ...DefaultTheme,
+  fonts: configureFonts(fontsConfig),
   colors: {
     ...DefaultTheme.colors,
     primary: 'tomato',
