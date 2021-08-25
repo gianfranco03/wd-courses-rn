@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import { isEmpty } from "lodash";
 
+import { useUser } from '../../context/userContext';
 import { supabase } from '../../lib/constants/api';
 import showToast, { TYPES } from '../../utils/toast';
 
@@ -10,26 +11,9 @@ import styles from './styles';
 
 const LoginScreen = props => {
   const { navigation } = props;
-  const [user, setUser] = useState(null);
+  const { user } = useUser()
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-
-  useEffect(() => {
-    const session = supabase.auth.session();
-    setUser(session?.user ?? null);
-
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        const currentUser = session?.user;
-        setUser(currentUser ?? null);
-
-      },
-    );
-
-    return () => {
-      authListener?.unsubscribe();
-    };
-  }, []);
 
   useEffect(() => {
     if (!user) {

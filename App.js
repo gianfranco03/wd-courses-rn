@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
 
+import { UserContextProvider } from './src/context/userContext';
 import RootScreen from './src/screens/root';
 
 const theme = {
@@ -14,9 +15,11 @@ const theme = {
 
 const App = () => {
   return (
-    <PaperProvider theme={theme}>
-      <RootScreen />
-    </PaperProvider>
+    <UserContextProvider>
+      <PaperProvider theme={theme}>
+        <RootScreen />
+      </PaperProvider>
+    </UserContextProvider>
   );
 };
 
