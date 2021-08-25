@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import {  Button, } from 'react-native-paper';
 import RNBootSplash from 'react-native-bootsplash';
 import { isEmpty } from "lodash";
 
@@ -12,8 +13,8 @@ import styles from './styles';
 const LoginScreen = props => {
   const { navigation } = props;
   const { user } = useUser()
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     if (!user) {
@@ -51,14 +52,28 @@ const LoginScreen = props => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text>Hello from Login screen</Text>
-        <TouchableOpacity
-          onPress={() => navigation.replace('Main')}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Go to Home Screen</Text>
-        </TouchableOpacity>
-      </View>
+      <TextInput
+           style={{height: 40}}
+        label="Email"
+        value={email}
+        placeholder="Email"
+        onChangeText={email => {setEmail(email)}}
+      />
+
+      <TextInput 
+      style={{height: 40}}
+        label="Password"
+        placeholder="Password"
+        value={password}
+        onChangeText={password => {setPassword(password); console.log(password);}}
+      />
+
+      <Button icon="camera" mode="contained" onPress={() => {console.log('Pressed'); onSignIn()}}>
+          Ingresar
+      </Button>
+ 
+
+
     </View>
   );
 };

@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
   },
+  inputs: {
+    height: 20,
+    
+  }
 });
 
 export default styles;
