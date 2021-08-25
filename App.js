@@ -1,7 +1,7 @@
 import React from 'react';
-import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
+import {Provider as PaperProvider, DefaultTheme} from 'react-native-paper';
 
-import { UserContextProvider } from './src/context/userContext';
+import {UserContextProvider} from './src/context/userContext';
 import RootScreen from './src/screens/root';
 
 const theme = {
@@ -10,6 +10,7 @@ const theme = {
     ...DefaultTheme.colors,
     primary: 'tomato',
     accent: 'yellow',
+    text: 'black',
   },
 };
 
