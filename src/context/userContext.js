@@ -16,6 +16,7 @@ export const UserContextProvider = props => {
   const [session, setSession] = useState(null);
 
   useEffect(() => {
+    // loginTemp();
     const sessionAux = supabase.auth.session();
     setSession(sessionAux);
     setUser(sessionAux?.user ?? null);
@@ -29,7 +30,6 @@ export const UserContextProvider = props => {
         if (currentUser?.id) {
           getUserInfo(currentUser?.id);
           getSections();
-          getCourses();
         }
       },
     );
@@ -39,13 +39,29 @@ export const UserContextProvider = props => {
     };
   }, []);
 
+  const loginTemp = async () => {
+    try {
+      let {user, error} = await supabase.auth.signIn({
+        email: 'gianfrancohj03@gmail.com',
+        password: 'password',
+      });
+    } catch (e) {
+      console.log('error');
+    }
+  };
+
   const getUserInfo = async id => {
     try {
       const {data: profile} = await supabase
         .from('profiles')
         .select('*')
         .eq('profile_id', id);
-      setUserInfo(profile[0] ?? null);
+      const userInfoAux = profile[0] ?? null;
+      setUserInfo(userInfoAux);
+
+      if (userInfoAux) {
+        getCourses(id, userInfoAux.current_semester);
+      }
     } catch (e) {
       console.log('error p', e);
     }
@@ -60,10 +76,22 @@ export const UserContextProvider = props => {
     }
   };
 
-  const getCourses = async id => {
+  const getCourses = async (id, semester) => {
     try {
-      const {data: coursesAux} = await supabase.from('courses').select('*');
-      setCourses(coursesAux ?? null);
+      let {data: user_courses} = await supabase
+        .from('user_courses')
+        .select('course_id');
+
+      let {data: coursesAux} = await supabase
+        .from('courses')
+        .select('name,course_id')
+        .eq('semester_id', semester);
+
+      const results = coursesAux.filter(({course_id: id1}) =>
+        user_courses.some(({course_id: id2}) => id2 === id1),
+      );
+
+      setCourses(results ?? []);
     } catch (e) {
       console.log('error s', e);
     }

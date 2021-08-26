@@ -1,25 +1,22 @@
-import * as React from 'react';
+import React from 'react';
 import {List} from 'react-native-paper';
 
 const ListAccordion = props => {
-  const {title, icon, options, onPress} = props;
-
+  const {title, icon, options, onChange, listTitle} = props;
   const [expanded, setExpanded] = React.useState(false);
-  const [selected, setSelected] = React.useState(options[0]?.name || '');
 
   const handlePress = () => setExpanded(!expanded);
 
   const handlePressItem = id => {
     const selectedAux = options.find(item => item.id == id);
-    setSelected(selectedAux.name);
     handlePress();
-    onPress(id);
+    onChange(selectedAux);
   };
 
   return (
     <List.Section title={title}>
       <List.Accordion
-        title={selected}
+        title={listTitle}
         left={props => <List.Icon {...props} icon={icon} />}
         expanded={expanded}
         onPress={handlePress}>
@@ -46,7 +43,8 @@ ListAccordion.defaultProps = {
     {name: 'First item', id: 1},
     {name: 'Second item', id: 2},
   ],
-  onPress: () => {},
+  onChange: () => {},
+  listTitle: 'Selecciona una opción',
 };
 
 export default ListAccordion;

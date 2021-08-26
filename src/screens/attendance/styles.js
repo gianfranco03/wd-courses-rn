@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -12,6 +12,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: hp(2),
     paddingHorizontal: wp(5),
+  },
+  header: {
+    height: Platform.OS === 'ios' ? hp(8) : hp(9),
   },
   buttonsContainer: {
     marginTop: hp(4),
