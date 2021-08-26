@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Platform} from 'react-native';
 import {Button} from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -7,14 +7,26 @@ import styles from './styles';
 
 const isIOS = Platform.OS === 'ios';
 
-const DatePicker = () => {
+const DatePicker = props => {
+  const {onPress, clear} = props;
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    onPress(dateFormat(date));
+  }, []);
+
+  useEffect(() => {
+    if (!clear) {
+      setDate(new Date());
+    }
+  }, [clear]);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(isIOS);
     setDate(currentDate);
+    onPress(dateFormat(currentDate));
   };
 
   const dateFormat = dateInfo => {
@@ -55,6 +67,11 @@ const DatePicker = () => {
       </Button>
     </View>
   );
+};
+
+DatePicker.defaultProps = {
+  onPress: () => {},
+  clear: new Date(),
 };
 
 export default DatePicker;

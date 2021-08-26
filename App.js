@@ -7,6 +7,7 @@ import {
 
 import {UserContextProvider} from './src/context/userContext';
 import RootScreen from './src/screens/root';
+import colors from './src/lib/constants/colors';
 import {fontsConfig} from './src/lib/constants/typography';
 
 const theme = {
@@ -14,9 +15,7 @@ const theme = {
   fonts: configureFonts(fontsConfig),
   colors: {
     ...DefaultTheme.colors,
-    primary: 'tomato',
-    accent: 'yellow',
-    text: 'black',
+    ...colors,
   },
 };
 
