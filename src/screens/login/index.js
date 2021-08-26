@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
-<<<<<<< HEAD
 import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import { TextInput, Button, Card, Title, Paragraph } from 'react-native-paper';
-=======
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import {  Button, } from 'react-native-paper';
->>>>>>> eb8972d8243753fd266e661b4c512df9a760d7ea
 import RNBootSplash from 'react-native-bootsplash';
 import { isEmpty } from "lodash";
 
@@ -66,8 +61,7 @@ const LoginScreen = props => {
       style={styles.inputText}
       label="Email"
       value={email}
-      placeholder="Your Email"
-      underlineColorAndroid="transparent"
+      placeholder="Ingrese su correo"
       onChangeText={email => setEmail(email)}
       />
 
@@ -75,15 +69,21 @@ const LoginScreen = props => {
       style={styles.inputText}
       label="Password"
       value={password}
-      placeholder="Password"
-      underlineColorAndroid="transparent"
+      secureTextEntry={true}
+      placeholder="Contraseña"
       onChangeText={password => setPassword(password)}
       />
       
       <Button
       style={ styles.button }
       icon="login"
-      mode="contained">Iniciar Sesión</Button>
+      mode="contained"
+      onPress={() => {
+          console.log('Pressed');
+          onSignIn();
+        }}>
+          Iniciar Sesión
+      </Button>
     </Card.Content>
 
     </Card>
