@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   containerForm: {
     textAlignVertical: 'center',
-    marginTop: 200,
+    marginTop: hp(25),
   },
   button: {
     marginTop: hp(3),
@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   inputText: {
-    height: 70,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    borderRadius: 20,
-    marginBottom: 20
+    height: hp(9),
+    borderTopRightRadius: hp(3),
+    borderTopLeftRadius: hp(3),
+    borderRadius: hp(3),
+    marginBottom: hp(4)
   },
   textoTitulo: {
     color: 'blue',

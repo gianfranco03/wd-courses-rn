@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
-import { TextInput, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { View } from 'react-native';
+import { TextInput, Button, Card } from 'react-native-paper';
 import RNBootSplash from 'react-native-bootsplash';
 import { isEmpty } from "lodash";
 
@@ -79,7 +79,6 @@ const LoginScreen = props => {
       icon="login"
       mode="contained"
       onPress={() => {
-          console.log('Pressed');
           onSignIn();
         }}>
           Iniciar Sesión
