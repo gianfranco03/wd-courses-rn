@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
+<<<<<<< HEAD
 import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import { TextInput, Button, Card, Title, Paragraph } from 'react-native-paper';
+=======
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import {  Button, } from 'react-native-paper';
+>>>>>>> eb8972d8243753fd266e661b4c512df9a760d7ea
 import RNBootSplash from 'react-native-bootsplash';
 import { isEmpty } from "lodash";
 
@@ -13,8 +18,8 @@ import styles from './styles';
 const LoginScreen = props => {
   const { navigation } = props;
   const { user } = useUser()
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     if (!user) {
