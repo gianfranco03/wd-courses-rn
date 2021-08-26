@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
+import { TextInput, Button, Card, Title, Paragraph } from 'react-native-paper';
 import RNBootSplash from 'react-native-bootsplash';
 import { isEmpty } from "lodash";
 
@@ -50,15 +51,37 @@ const LoginScreen = props => {
   };
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Text>Hello from Login screen</Text>
-        <TouchableOpacity
-          onPress={() => navigation.replace('Main')}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Go to Home Screen</Text>
-        </TouchableOpacity>
-      </View>
+    <View>
+
+    <Card style={ styles.containerForm }>
+    <Card.Title title="Iniciar Sesión" subtitle="Ingrese sus datos" style={ styles.textoTitulo } />
+    <Card.Content>
+
+      <TextInput
+      style={styles.inputText}
+      label="Email"
+      value={email}
+      placeholder="Your Email"
+      underlineColorAndroid="transparent"
+      onChangeText={email => setEmail(email)}
+      />
+
+      <TextInput
+      style={styles.inputText}
+      label="Password"
+      value={password}
+      placeholder="Password"
+      underlineColorAndroid="transparent"
+      onChangeText={password => setPassword(password)}
+      />
+      
+      <Button
+      style={ styles.button }
+      icon="login"
+      mode="contained">Iniciar Sesión</Button>
+    </Card.Content>
+
+    </Card>
     </View>
   );
 };
