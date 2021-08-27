@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView, StatusBar} from 'react-native';
 import {Button} from 'react-native-paper';
 import {Appbar, Title, Subheading} from 'react-native-paper';
 import {useTheme} from 'react-native-paper';
@@ -119,6 +119,7 @@ const AttendanceScreen = () => {
 
   return (
     <View style={[styles.container, backgroundColor]}>
+      <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
       <Appbar.Header style={styles.header}>
         <Appbar.Content
           title="Asitencia"
