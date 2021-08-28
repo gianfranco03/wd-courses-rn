@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, Dimensions, ScrollView} from 'react-native';
 import {useTheme, Appbar, Title} from 'react-native-paper';
 import {
@@ -12,6 +12,7 @@ import {
 import {Tabs, TabScreen} from 'react-native-paper-tabs';
 
 import styles from './styles';
+import {supabase} from '../../lib/constants/api';
 
 const STATS_TYPES = {
   PEOPLE: 'PEOPLE',
@@ -22,23 +23,83 @@ const STATS_TYPES = {
 function StatsRender(type) {
   const {colors} = useTheme();
 
-  const [peopleData, setPeopleData] = useState([
-    {x: 'Alumnos', y: 30},
-    {x: 'Catedraticos', y: 40},
-  ]);
-  const [coursesData, setCoursesData] = useState([
-    {y: 30, x: 'Desarrollo Web'},
-    {y: 23, x: 'Analisis de Sistemas'},
-    {y: 34, x: 'Redes de Computacion'},
-    {y: 42, x: 'Etica Profesional'},
-  ]);
+  const [peopleData, setPeopleData] = useState([]);
+  const [coursesData, setCoursesData] = useState([]);
   const [sectionsData, setSectionsData] = useState([
-    {x: 'A', y: 30},
-    {x: 'B', y: 32},
-    {x: 'C', y: 35},
-    {x: 'D', y: 23},
+    {x: 'A', y: 1},
+    {x: 'B', y: 2},
+    {x: 'C', y: 1},
   ]);
   const [courseSelected, setCourseSelected] = useState('Desarrollo Web');
+  const [studentsLength, setStudentsLength] = useState(0);
+
+  useEffect(() => {
+    getPeopleData();
+    getCoursesData();
+    getSectionsData();
+  }, []);
+
+  const getPeopleData = async () => {
+    let {data: students, error} = await supabase
+      .from('profiles')
+      .select('user_category')
+      .eq('user_category', 1);
+
+    let {data: teachers, error2} = await supabase
+      .from('profiles')
+      .select('user_category')
+      .eq('user_category', 2);
+
+    let dataSupabase = [
+      {x: 'Alumnos', y: students.length},
+      {x: 'Catedraticos', y: teachers.length},
+    ];
+
+    setStudentsLength(students.length);
+    setPeopleData(dataSupabase);
+  };
+
+  const getCoursesData = async () => {
+    let {data: courses, error} = await supabase.from('courses').select('name');
+
+    const localCourses = courses.map(course => {
+      return {x: course.name, y: Math.floor(Math.random() * studentsLength)};
+    });
+
+    setCoursesData(localCourses);
+  };
+
+  const getSectionsData = () => {
+    let distributeInteger = function* (total, divider) {
+      if (divider === 0) {
+        yield 0;
+      } else {
+        let rest = total % divider;
+        let result = total / divider;
+
+        for (let i = 0; i < divider; i++) {
+          if (rest-- > 0) {
+            yield Math.ceil(result);
+          } else {
+            yield Math.floor(result);
+          }
+        }
+      }
+    };
+
+    let sections = [];
+    let sectionsLetter = ['A', 'B', 'C', 'D'];
+
+    for (let student of distributeInteger(studentsLength, 4)){
+      sections.push(student);
+    }
+
+    const dataSupabase = sections.map((section, index) => {
+      return {x: sectionsLetter[index], y: sections[index]};
+    });
+
+    setSectionsData(dataSupabase);
+  };
 
   const renderPeopleChart = () => {
     return (
@@ -46,7 +107,7 @@ function StatsRender(type) {
         <Title style={{textAlign: 'center', marginTop: 30}}>Distribucion</Title>
         <VictoryPie
           data={peopleData}
-          labelRadius={({innerRadius}) => innerRadius + 10}
+          labelRadius={({innerRadius}) => innerRadius + 50}
           style={{labels: {fill: 'white', fontSize: 20}}}
           labels={({datum}) => `${datum.x} ${datum.y}`}
         />
@@ -95,10 +156,12 @@ function StatsRender(type) {
     return (
       <ScrollView>
         <View style={{flex: 1, flexDirection: 'column'}}>
-          <Title style={{ textAlign: 'center', marginTop: 30}}>{courseSelected}</Title>
+          <Title style={{textAlign: 'center', marginTop: 30}}>
+            {courseSelected}
+          </Title>
           <VictoryPie
             data={sectionsData}
-            labelRadius={({innerRadius}) => innerRadius + 70}
+            labelRadius={({innerRadius}) => innerRadius + 60}
             style={{labels: {fill: 'white', fontSize: 20}}}
             labels={({datum}) => `Seccion ${datum.x}\n ${datum.y}`}
           />
