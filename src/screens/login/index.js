@@ -16,6 +16,7 @@ const LoginScreen = props => {
   const {user} = useUser();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [hidePassword, setHidePassword] = useState(true);
 
   useEffect(() => {
     if (!user) {
@@ -67,6 +68,7 @@ const LoginScreen = props => {
       <View style={styles.inputContainer} s>
         <TextInput
           mode="flat"
+          keyboardType="email-address"
           left={<TextInput.Icon name="email" color={colors.primary} />}
           style={styles.inputText}
           label="Email"
@@ -79,10 +81,25 @@ const LoginScreen = props => {
         <TextInput
           mode="flat"
           left={<TextInput.Icon name="lock" color={colors.primary} />}
+          right={
+            hidePassword ? (
+              <TextInput.Icon
+                name="eye-off"
+                color={colors.primary}
+                onPress={() => setHidePassword(false)}
+              />
+            ) : (
+              <TextInput.Icon
+                name="eye"
+                color={colors.primary}
+                onPress={() => setHidePassword(true)}
+              />
+            )
+          }
           style={styles.inputText}
           label="Password"
           value={password}
-          secureTextEntry={true}
+          secureTextEntry={hidePassword}
           placeholder="Contraseña"
           onChangeText={password => setPassword(password)}
         />
