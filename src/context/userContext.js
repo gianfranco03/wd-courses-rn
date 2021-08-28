@@ -91,7 +91,8 @@ export const UserContextProvider = props => {
     try {
       let {data: user_courses} = await supabase
         .from('user_courses')
-        .select('course_id');
+        .select('course_id')
+        .eq('profile_id', id);
 
       let {data: coursesAux} = await supabase
         .from('courses')
