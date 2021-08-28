@@ -21,7 +21,7 @@ const STATS_TYPES = {
 };
 
 function StatsRender(type) {
-  const {colors} = useTheme();
+  const themePaper = useTheme();
 
   const [peopleData, setPeopleData] = useState([]);
   const [coursesData, setCoursesData] = useState([]);
@@ -90,7 +90,7 @@ function StatsRender(type) {
     let sections = [];
     let sectionsLetter = ['A', 'B', 'C', 'D'];
 
-    for (let student of distributeInteger(studentsLength, 4)){
+    for (let student of distributeInteger(studentsLength, 4)) {
       sections.push(student);
     }
 
@@ -121,27 +121,31 @@ function StatsRender(type) {
         <Title style={{textAlign: 'center', marginTop: 30}}>
           Alumnos por curso
         </Title>
-        <VictoryChart domainPadding={25}>
-          <VictoryAxis dependentAxis />
-          <VictoryBar
-            data={coursesData}
-            categories={{
-              x: [
-                'Desarrollo Web',
-                'Analisis de Sistemas',
-                'Redes de Computacion',
-                'Etica Profesional',
-              ],
-            }}
-            labels={({datum}) => datum.y}
-            style={{labels: {fill: 'white'}}}
-            labelComponent={<VictoryLabel dy={30} />}
-          />
-        </VictoryChart>
+        <View>
+          <VictoryChart domainPadding={25}>
+            <VictoryAxis dependentAxis />
+            <VictoryBar
+              data={coursesData}
+              categories={{
+                x: [
+                  'Desarrollo Web',
+                  'Analisis de Sistemas',
+                  'Redes de Computacion',
+                  'Etica Profesional',
+                ],
+              }}
+              labels={({datum}) => datum.y}
+              style={{labels: {fill: 'white'}}}
+              labelComponent={<VictoryLabel dy={30} />}
+            />
+          </VictoryChart>
+        </View>
         <View style={{flex: 1, flexDirection: 'column', marginHorizontal: 30}}>
-          {coursesData.map(course => {
+          {coursesData.map((course, index) => {
             return (
-              <View style={{flexDirection: 'row', marginVertical: 2}}>
+              <View
+                style={{flexDirection: 'row', marginVertical: 2}}
+                key={index}>
                 <Text style={{fontWeight: 'bold'}}>- {course.x} :</Text>
                 <Text>{course.y} estudiantes</Text>
               </View>
@@ -193,7 +197,7 @@ const StatsScreen = () => {
   return (
     <View style={[styles.container, backgroundColor]}>
       <Appbar.Header style={styles.header}>
-        <Appbar.Content title="Stats" color="white" />
+        <Appbar.Content title="Estadísticas" color="white" />
       </Appbar.Header>
       <Tabs>
         <TabScreen label="Personas" icon="account-multiple-outline">
