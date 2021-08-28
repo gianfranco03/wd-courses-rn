@@ -41,10 +41,21 @@ export const UserContextProvider = props => {
 
   const loginTemp = async () => {
     try {
-      let {user, error} = await supabase.auth.signIn({
-        email: 'gianfrancohj03@gmail.com',
+      // let {user, error} = await supabase.auth.signIn({
+      //   email: 'mcastrov6@miumg.edu.gt',
+      //   password: 'password',
+      // });
+
+      let {user, error} = await supabase.auth.signUp({
+        email: 'crisgianfrancojuarez306@gmail.com',
         password: 'password',
       });
+      if (user) {
+        console.log('created', user);
+      }
+      if (error) {
+        console.log('error', error);
+      }
     } catch (e) {
       console.log('error');
     }
