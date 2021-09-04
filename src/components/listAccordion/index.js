@@ -1,5 +1,8 @@
 import React from 'react';
+import {View} from 'react-native';
 import {List} from 'react-native-paper';
+
+import styles from './styles';
 
 const ListAccordion = props => {
   const {title, icon, options, onChange, listTitle} = props;
@@ -14,24 +17,26 @@ const ListAccordion = props => {
   };
 
   return (
-    <List.Section title={title}>
-      <List.Accordion
-        title={listTitle}
-        left={props => <List.Icon {...props} icon={icon} />}
-        expanded={expanded}
-        onPress={handlePress}>
-        {options && options.length > 0
-          ? options.map((item, index) => (
-              <List.Item
-                key={index}
-                style={{backgroundColor: 'white'}}
-                title={item.name}
-                onPress={() => handlePressItem(item.id)}
-              />
-            ))
-          : null}
-      </List.Accordion>
-    </List.Section>
+    <View style={styles.container}>
+      <List.Section title={title}>
+        <List.Accordion
+          title={listTitle}
+          left={props => <List.Icon {...props} icon={icon} />}
+          expanded={expanded}
+          onPress={handlePress}>
+          {options && options.length > 0
+            ? options.map((item, index) => (
+                <List.Item
+                  key={index}
+                  style={styles.item}
+                  title={item.name}
+                  onPress={() => handlePressItem(item.id)}
+                />
+              ))
+            : null}
+        </List.Accordion>
+      </List.Section>
+    </View>
   );
 };
 

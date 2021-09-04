@@ -1,18 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Dimensions, ScrollView} from 'react-native';
-import {useTheme, Appbar, Title} from 'react-native-paper';
-import {
-  VictoryPie,
-  VictoryChart,
-  VictoryBar,
-  VictoryLabel,
-  VictoryAxis,
-} from 'victory-native';
+import {View, Text, ScrollView} from 'react-native';
+import {useTheme, Appbar} from 'react-native-paper';
 
 import {Tabs, TabScreen} from 'react-native-paper-tabs';
 
+import ListAccordion from '../../components/listAccordion';
+import PieChart from '../../components/charts/pie';
+import BarChart from '../../components/charts/bar';
+
 import styles from './styles';
 import {supabase} from '../../lib/constants/api';
+import {
+  getCourseDataChart,
+  getSectionChartData,
+} from '../../supabase/chartsData';
 
 const STATS_TYPES = {
   PEOPLE: 'PEOPLE',
@@ -21,17 +22,13 @@ const STATS_TYPES = {
 };
 
 function StatsRender(type) {
-  const themePaper = useTheme();
-
   const [peopleData, setPeopleData] = useState([]);
   const [coursesData, setCoursesData] = useState([]);
-  const [sectionsData, setSectionsData] = useState([
-    {x: 'A', y: 1},
-    {x: 'B', y: 2},
-    {x: 'C', y: 1},
-  ]);
-  const [courseSelected, setCourseSelected] = useState('Desarrollo Web');
-  const [studentsLength, setStudentsLength] = useState(0);
+  const [sectionsData, setSectionsData] = useState([]);
+  const [courseSelected, setCourseSelected] = useState({
+    course_id: 1,
+    name: 'Desarrollo Web',
+  });
 
   useEffect(() => {
     getPeopleData();
@@ -40,12 +37,12 @@ function StatsRender(type) {
   }, []);
 
   const getPeopleData = async () => {
-    let {data: students, error} = await supabase
+    let {data: students} = await supabase
       .from('profiles')
       .select('user_category')
       .eq('user_category', 1);
 
-    let {data: teachers, error2} = await supabase
+    let {data: teachers} = await supabase
       .from('profiles')
       .select('user_category')
       .eq('user_category', 2);
@@ -55,120 +52,66 @@ function StatsRender(type) {
       {x: 'Catedraticos', y: teachers.length},
     ];
 
-    setStudentsLength(students.length);
     setPeopleData(dataSupabase);
   };
 
   const getCoursesData = async () => {
-    let {data: courses, error} = await supabase.from('courses').select('name');
-
-    const localCourses = courses.map(course => {
-      return {x: course.name, y: Math.floor(Math.random() * studentsLength)};
-    });
-
+    const localCourses = await getCourseDataChart();
     setCoursesData(localCourses);
   };
 
-  const getSectionsData = () => {
-    let distributeInteger = function* (total, divider) {
-      if (divider === 0) {
-        yield 0;
-      } else {
-        let rest = total % divider;
-        let result = total / divider;
+  const getSectionsData = async () => {
+    const sectionData = await getSectionChartData();
+    setSectionsData(sectionData);
+    setCourseSelected(sectionData[0]);
+  };
 
-        for (let i = 0; i < divider; i++) {
-          if (rest-- > 0) {
-            yield Math.ceil(result);
-          } else {
-            yield Math.floor(result);
-          }
-        }
-      }
-    };
+  const handleSections = selected => {
+    const sectionsAux = [...sectionsData];
 
-    let sections = [];
-    let sectionsLetter = ['A', 'B', 'C', 'D'];
+    const newSection = sectionsAux.filter(
+      item => item.course.course_id === selected.id,
+    );
 
-    for (let student of distributeInteger(studentsLength, 4)) {
-      sections.push(student);
-    }
-
-    const dataSupabase = sections.map((section, index) => {
-      return {x: sectionsLetter[index], y: sections[index]};
-    });
-
-    setSectionsData(dataSupabase);
+    setCourseSelected(newSection[0]);
   };
 
   const renderPeopleChart = () => {
     return (
       <ScrollView>
-        <Title style={{textAlign: 'center', marginTop: 30}}>Distribucion</Title>
-        <VictoryPie
-          data={peopleData}
-          labelRadius={({innerRadius}) => innerRadius + 50}
-          style={{labels: {fill: 'white', fontSize: 20}}}
-          labels={({datum}) => `${datum.x} ${datum.y}`}
-        />
+        <PieChart data={peopleData} title="# Personas" />
       </ScrollView>
     );
   };
 
   const renderCoursesChart = () => {
     return (
-      <ScrollView>
-        <Title style={{textAlign: 'center', marginTop: 30}}>
-          Alumnos por curso
-        </Title>
-        <View>
-          <VictoryChart domainPadding={25}>
-            <VictoryAxis dependentAxis />
-            <VictoryBar
-              data={coursesData}
-              categories={{
-                x: [
-                  'Desarrollo Web',
-                  'Analisis de Sistemas',
-                  'Redes de Computacion',
-                  'Etica Profesional',
-                ],
-              }}
-              labels={({datum}) => datum.y}
-              style={{labels: {fill: 'white'}}}
-              labelComponent={<VictoryLabel dy={30} />}
-            />
-          </VictoryChart>
-        </View>
-        <View style={{flex: 1, flexDirection: 'column', marginHorizontal: 30}}>
-          {coursesData.map((course, index) => {
-            return (
-              <View
-                style={{flexDirection: 'row', marginVertical: 2}}
-                key={index}>
-                <Text style={{fontWeight: 'bold'}}>- {course.x} :</Text>
-                <Text>{course.y} estudiantes</Text>
-              </View>
-            );
-          })}
-        </View>
+      <ScrollView style={styles.content}>
+        <BarChart data={coursesData} title="Alumnos por curso" />
       </ScrollView>
     );
   };
 
   const renderSectionsChart = () => {
     return (
-      <ScrollView>
-        <View style={{flex: 1, flexDirection: 'column'}}>
-          <Title style={{textAlign: 'center', marginTop: 30}}>
-            {courseSelected}
-          </Title>
-          <VictoryPie
-            data={sectionsData}
-            labelRadius={({innerRadius}) => innerRadius + 60}
-            style={{labels: {fill: 'white', fontSize: 20}}}
-            labels={({datum}) => `Seccion ${datum.x}\n ${datum.y}`}
-          />
+      <ScrollView style={styles.content}>
+        <ListAccordion
+          title="Curso"
+          listTitle={courseSelected?.course?.name || 'Selecciona una opción.'}
+          options={
+            (sectionsData &&
+              sectionsData.length > 0 &&
+              sectionsData.map(item => ({
+                id: item.course.course_id,
+                name: item.course.name,
+              }))) ||
+            []
+          }
+          onChange={handleSections}
+          icon="book-open-page-variant"
+        />
+        <View style={styles.sectionsChart}>
+          <PieChart data={(courseSelected && courseSelected.sections) || []} />
         </View>
       </ScrollView>
     );

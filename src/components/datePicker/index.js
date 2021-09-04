@@ -8,7 +8,7 @@ import styles from './styles';
 const isIOS = Platform.OS === 'ios';
 
 const DatePicker = props => {
-  const {onPress, clear} = props;
+  const {onPress, clear, disabled} = props;
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
@@ -59,6 +59,7 @@ const DatePicker = props => {
       <Button
         icon="calendar"
         mode="contained"
+        disabled={disabled}
         labelStyle={{color: 'white'}}
         onPress={() => handlePress()}>
         {`${isIOS ? (show ? 'Aceptar' : 'Fecha') : 'Fecha'} ${dateFormat(
@@ -72,6 +73,7 @@ const DatePicker = props => {
 DatePicker.defaultProps = {
   onPress: () => {},
   clear: new Date(),
+  disabled: false,
 };
 
 export default DatePicker;

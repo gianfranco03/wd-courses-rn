@@ -14,8 +14,11 @@ const styles = StyleSheet.create({
     height: containerWidth,
   },
   content: {
-    // flex: 1,
     paddingHorizontal: wp(5),
+  },
+  sectionsChart: {
+    // marginTop: hp(15),
+    alignItems: 'center',
   },
 });
 

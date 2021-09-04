@@ -13,6 +13,8 @@ import {supabase} from '../../lib/constants/api';
 import {useUser} from '../../context/userContext';
 import styles from './styles';
 
+const disabledDate = new Date().getDay() === 6;
+
 const AttendanceScreen = () => {
   const {colors} = useTheme();
   const backgroundColor = {backgroundColor: colors.appBackground};
@@ -162,6 +164,8 @@ const AttendanceScreen = () => {
         <DatePicker
           onPress={setTimeSelected}
           clear={sectionSelected && courseSelected}
+          // disabled
+          // disabled={disabledDate}
         />
         <View style={styles.buttonsContainer}>
           <Button
